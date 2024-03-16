@@ -1,0 +1,14 @@
+(library
+ (name worker)
+ (public_name merlin-js.worker)
+ (js_of_ocaml
+  (javascript_files stubs.js))
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries
+  protocol
+  merlin-lib.kernel
+  merlin-lib.utils
+  merlin-lib.query_protocol
+  merlin-lib.query_commands
+  merlin-lib.ocaml_parsing
+  js_of_ocaml))

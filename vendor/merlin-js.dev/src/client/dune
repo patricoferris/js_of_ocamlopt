@@ -1,0 +1,4 @@
+(library
+ (name merlin_client)
+ (public_name merlin-js.client)
+ (libraries protocol brr))

@@ -1,0 +1,30 @@
+; Worker library
+
+(rule
+ (targets worker.ml)
+ (deps
+  (:x worker.cppo.ml))
+ (action
+  (chdir
+   %{workspace_root}
+   (run %{bin:cppo} -V OCAML:%{ocaml_version} %{x} -o %{targets}))))
+
+(library
+ (name js_top_worker)
+ (public_name js-top-worker)
+ (modules worker uTop_complete uTop_lexer uTop_token uTop)
+ (libraries
+  js-top-worker.rpc
+  js_of_ocaml-toplevel
+  js_of_ocaml-compiler
+  astring)
+ (preprocess
+  (per_module
+   ((action
+     (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file}))
+    uTop_complete
+    uTop)
+   ((pps js_of_ocaml-ppx)
+    worker))))
+
+(ocamllex uTop_lexer)

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full !max-h-screen">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="An OCaml Toplevel Playground">
+    <meta name="twitter:title" content="OCaml Playground">
+    <meta name="twitter:description" content="An OCaml Toplevel Playground">
+    <meta property="og:site_name" content="OCaml">
+    <meta property="og:type" content="object">
+    <meta property="og:title" content="OCaml Playground">
+    <meta property="og:description" content="An OCaml Toplevel Playground">
+    <meta name="theme-color" content="#fff">
+    <meta name="color-scheme" content="white">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/codemirror.css">
+    <script defer src="vendors/alpine.min.js"></script>
+    <script id="playground-script"
+      data-merlin-url="./asset/merlin.min.js"
+      data-worker-url="./asset/worker.min.js"
+      data-default-code='let () = print_int (Random.int 10 + 2)'
+      src="./asset/playground.min.js" defer></script>
+    <style>
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #383838 #737373;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #383838;
+  border-radius: 8px;
+  border: none;
+}
+    </style>
+    <title>OCaml Playground</title>
+  </head>
+
+  <body class="dark bg-code-background !flex flex-col h-full !max-h-screen">
+
+    <div class="flex h-full overflow-hidden">
+      <div id="panes" class="flex-1 flex flex-col md:flex-row max-h-fit">
+
+        <div id="pane-0" class="flex flex-col h-4/6 md:h-full w-full md:w-[60%]">
+          <div id="editor1" class="flex-1 flex flex-col overflow-auto"></div>
+          <div class="bg-code-background w-full bottom-0">
+            <div class="flex gap-7 w-full justify-between md:justify-end items-center px-2">
+              <button
+                id="share"
+                class="flex items-center justify-center px-2 h-8 m-4 space-x-2 border border-white rounded text-sm text-white hover:text-[#000] hover:bg-white hover:border-none"
+                >
+                <span>Share</span>
+                <!-- <%s! Icons.share "h-4 w-4 stroke-current" %> -->
+              </button>
+              <button id="run" class="btn btn-sm space-x-2 mr-4">
+                <span class="text-lighter">RUN</span>
+                <!-- <%s! Icons.play_triangle "h-4 w-4" %> -->
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div x-data="{ output : true, dump : false, asm : false }" id="pane-1" class="flex flex-col h-2/6 md:h-full w-full md:w-[40%] bg-stone-800">
+
+            <div class="flex justify-between text-white">
+
+              <button
+                class="hidden text-lg md:flex p-4"
+                x-on:click="output = true; dump = false; asm = false"
+                x-bind:style="output ? { border: 'lightgray solid medium'}
+                : { border: 'transparent solid medium'}"
+                >
+                Output
+              </button>
+
+              <div class="md:flex"
+              x-on:click="output = false; dump = true; asm
+              = false" x-bind:style="dump ? { border: 'lightgray solid medium'}
+              : { border: 'transparent solid medium'}">
+              <button
+                class="hidden md:flex text-lg p-4"
+                >
+                Dump
+                </button>
+                <div style="margin-top: 10px;" class="text-black" id="select-holder"></div>
+              </div>
+
+              <button
+                class="hidden text-lg md:flex p-4"
+                style="border: transparent solid medium"
+                x-on:click="output = false; dump = false; asm = true"
+                x-bind:style="asm ? { border: 'lightgray solid medium'} : { border: 'transparent solid medium'}"
+                >
+                Assembly
+              </button>
+
+              <button
+                class="clear-output-btn hidden md:flex items-center justify-center px-2 h-8 m-4 space-x-2 border border-white rounded text-sm text-white hover:text-[#000] hover:bg-white hover:border-none">
+                  <span> Clear </span>
+                  <!-- <%s! Icons.trash "h-4 w-4" %> -->
+              </button>
+
+            </div>
+            <div class="flex flex-col justify-between space-y-4 border-dark-separator_30 border-t output-container overflow-auto">
+              <div
+                style="font-family: monospace;font-size: large;"
+                id="output"
+                class="h-auto flex-col overflow-auto p-4 text-white"
+                x-show.important="output"
+                ></div>
+            <div
+                style="font-family: monospace;font-size: large;"
+                id="dump"
+                class="h-auto flex-col overflow-auto p-4 text-white"
+                x-show.important="dump"
+                ></div>
+            <div
+                style="font-family: monospace;font-size: large;"
+                id="asm"
+                class="h-auto flex-col overflow-auto p-4 text-white"
+                x-show.important="asm"
+                ></div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    const clearOutputButtons = document.querySelectorAll(".clear-output-btn");
+
+    clearOutputButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        document.getElementById("output").innerHTML = "";
+      });
+    });
+    </script>
+  </body>
+</html>

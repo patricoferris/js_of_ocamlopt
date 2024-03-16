@@ -1,0 +1,18 @@
+.grid-logos {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative text-center;
+}
+
+.grid-logos:after {
+  content: "";
+  @apply h-px bottom-0 bg-legacy-default dark:bg-legacy-dark-default w-full left-0 absolute;
+}
+
+.grid-logos > a {
+  @apply  border-b border-r border-solid border-separator_20 dark:border-dark-separator_30
+}
+
+@media (min-width: 1024px) {
+  .grid-logos > a:nth-of-type(4n) {
+    border-right: 0;
+  }
+}

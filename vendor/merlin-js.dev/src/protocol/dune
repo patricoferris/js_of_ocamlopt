@@ -1,0 +1,7 @@
+(library
+ (name protocol)
+ (public_name merlin-js.protocol)
+ (libraries
+  merlin-lib.ocaml_parsing
+  merlin-lib.query_protocol
+  merlin-lib.kernel))
