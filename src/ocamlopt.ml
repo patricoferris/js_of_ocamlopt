@@ -151,8 +151,7 @@ type dump =
   | Lambda
   | Rawclambda
   | Clambda
-  | Flambda
-  | Instr
+  | Sel
   | Cmm
   | Linear
 
@@ -166,8 +165,7 @@ let all_dump =
     Rawlambda;
     Rawclambda;
     Clambda;
-    Flambda;
-    Instr;
+    Sel;
     Cmm;
     Linear;
   ]
@@ -182,8 +180,7 @@ let dump_to_string (d : dump) : string =
   | Lambda -> "Lambda"
   | Rawclambda -> "Rawclambda"
   | Clambda -> "Clambda"
-  | Flambda -> "Flambda"
-  | Instr -> "Instr"
+  | Sel -> "Sel"
   | Cmm -> "Cmm"
   | Linear -> "Linear"
 
@@ -197,8 +194,7 @@ let string_to_dump (s : string) : dump option =
   | "lambda" -> Some Lambda
   | "rawclambda" -> Some Rawclambda
   | "clambda" -> Some Clambda
-  | "flambda" -> Some Flambda
-  | "instr" -> Some Instr
+  | "sel" -> Some Sel
   | "cmm" -> Some Cmm
   | "linear" -> Some Linear
   | _ -> None
@@ -213,6 +209,7 @@ let reset_flags () =
   dump_rawclambda := false;
   dump_clambda := false;
   dump_flambda := false;
+  dump_selection := false;
   dump_instr := false;
   dump_cmm := false;
   dump_linear := false
@@ -228,8 +225,7 @@ let set_clfags v =
   | Lambda -> dump_lambda := true
   | Rawclambda -> dump_rawclambda := true
   | Clambda -> dump_clambda := true
-  | Flambda -> dump_flambda := true
-  | Instr -> dump_instr := true
+  | Sel -> dump_selection := true
   | Cmm -> dump_cmm := true
   | Linear -> dump_linear := true
 
